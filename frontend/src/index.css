@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/* ============================================
+   THEME CONFIGURATION (Tailwind v4)
+   Define design tokens using @theme directive
+   ============================================ */
+@theme {
+  /* Base radius for consistent rounding */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  /* White surfaces, orange-red actions, cream only as a small accent */
+  --color-background: #f7f7f8;
+  --color-foreground: #18181b;
+  --color-card: #ffffff;
+  --color-card-foreground: #18181b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #18181b;
+  --color-primary: #ff5b32;
+  --color-primary-foreground: #ffffff;
+  --color-primary-hover: #e64e2a;
+  --color-primary-ink: #c2410c;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #18181b;
+  --color-cream: #fff2cf;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-accent: #fff2cf;
+  --color-accent-foreground: #18181b;
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #ff5b32;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    --color-background: #111113;
+    --color-foreground: #fafafa;
+    --color-card: #1c1c1f;
+    --color-card-foreground: #fafafa;
+    --color-popover: #1c1c1f;
+    --color-popover-foreground: #fafafa;
+    --color-primary: #ff5b32;
+    --color-primary-foreground: #ffffff;
+    --color-primary-hover: #ff7a58;
+    --color-primary-ink: #ffb199;
+    --color-secondary: #27272a;
+    --color-secondary-foreground: #fafafa;
+    --color-cream: #3a3024;
+    --color-muted: #27272a;
+    --color-muted-foreground: #a1a1aa;
+    --color-accent: #3a3024;
+    --color-accent-foreground: #fafafa;
+    --color-destructive: oklch(0.704 0.191 22.216);
+    --color-border: color-mix(in srgb, #ffffff 12%, transparent);
+    --color-input: color-mix(in srgb, #ffffff 16%, transparent);
+    --color-ring: #ff5b32;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  a {
+    @apply text-foreground underline-offset-4 transition-colors;
+  }
+
+  a:hover {
+    @apply text-muted-foreground;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring/50 ring-offset-2 ring-offset-background;
+  }
+}
+
+/* ============================================
+   GLASSMORPHISM UTILITIES
+   Reusable glass effect patterns
+   ============================================ */
+@layer components {
+  /* Glass card - for content cards with rounded corners */
+  .glass-card {
+    @apply rounded-2xl border border-black/10 bg-white/80 shadow-xl backdrop-blur-xl;
+  }
+}
+
+/* ============================================
+   RTL SUPPORT
+   Arabic language text direction support
+   ============================================ */
+@layer base {
+  /* RTL text direction */
+  [dir="rtl"] {
+    direction: rtl;
+    text-align: start;
+  }
+
+  [dir="ltr"] {
+    direction: ltr;
+    text-align: start;
+  }
+}
+
+@keyframes loader-skeleton-shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@layer utilities {
+  /* RTL-aware spacing utilities */
+  .me-2 {
+    margin-inline-end: 0.5rem;
+  }
+  
+  .ms-2 {
+    margin-inline-start: 0.5rem;
+  }
+  
+  .pe-4 {
+    padding-inline-end: 1rem;
+  }
+  
+  .ps-4 {
+    padding-inline-start: 1rem;
+  }
+}

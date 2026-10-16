@@ -1,0 +1,35 @@
+---
+description: Maswada AI API contract for frontend integration
+alwaysApply: true
+---
+
+# Maswada AI integration contract
+
+Ahmad is the frontend developer. Treat `backend/src/routes/ai.ts` as the only backend surface the frontend needs for AI. Do not walk him through OpenAI, services, or validators unless he asks. The route file is the menu of HTTP calls.
+
+Mounted in `backend/src/app.ts` at `/api/ai`. Every route requires Clerk auth, same pattern as notes in `frontend/src/hooks/useApiNotes.tsx`: `Authorization: Bearer ${token}` from `useAuth().getToken()`, `POST`, `Content-Type: application/json`, base URL `VITE_API_URL` or `http://localhost:3001`.
+
+## Endpoints
+
+All three return `{ result: string }`. They do not save the note. The UI decides whether to replace the editor text.
+
+- `POST /api/ai/summarize`
+  - Body: `{ noteId?: uuid } | { text: string }`
+  - One of `noteId` or `text` is required.
+- `POST /api/ai/rewrite`
+  - Body: `{ mode: "comedy" | "formal" | "casual" }` plus `noteId` or `text`.
+  - `mode` is required.
+- `POST /api/ai/translate`
+  - Body: `{ noteId?: uuid } | { text: string }`
+  - English becomes Arabic, Arabic becomes English. No target-language field.
+
+Prefer `noteId` when the note is already saved, so the backend reads stored content. Send `text` for unsaved editor content.
+
+## Errors the UI should handle
+
+- `400` `{ error: "Validation failed", details: [{ path, message }] }` when the body is missing `noteId`/`text`, or rewrite is missing `mode`.
+- `401` when the Clerk token is missing.
+- `500` `{ error: "Internal server error" }` for OpenAI or other failures.
+
+Show a loading state. These calls are slow.
+---
