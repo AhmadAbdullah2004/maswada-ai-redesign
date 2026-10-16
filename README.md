@@ -65,3 +65,9 @@ This project is under development. Some features may require valid Clerk and Ope
 ---
 
 **Built as a full-stack learning project to practice React, TypeScript, backend integration, authentication, and AI-powered features.**
+
+## Live Demo
+
+Try Maswada AI here:
+
+[Open Maswada AI](https://maswada-ai-redesign.vercel.app)
